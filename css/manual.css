@@ -1,0 +1,147 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  min-height: 100%;
+  height: auto;
+}
+main,
+content,
+section,
+header,
+nav {
+  display: block;
+}
+a {
+  text-decoration: none;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: inherit;
+}
+table > thead {
+  text-align: left;
+  font-weight: normal;
+}
+/**
+ * Markdown
+ */
+code[class*=language-] {
+  max-width: 100%;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: 'Source Code Pro', monospace;
+}
+/**
+ * Headers
+ */
+h1 {
+  color: #000;
+  font-size: 2.5em;
+  margin-top: 0;
+  padding-top: 0;
+}
+h2 {
+  font-size: 1.5em;
+  padding-bottom: 0.5em;
+  margin-top: 2em;
+}
+h3 {
+  font-size: 1.2em;
+}
+/**
+ * Tables
+ */
+th,
+td {
+  padding: 0.2em;
+}
+tbody tr td {
+  border-bottom: 1px solid #e8e8e8;
+}
+tbody tr:nth-child(2n+1) td {
+  background-color: #fafafa;
+}
+table.reference {
+  width: 600px;
+  border: 1px solid #e8e8e8;
+}
+table.reference tr {
+  border: 0 none;
+}
+table.reference tr:nth-child(1) td {
+  border-bottom: 1px solid #e8e8e8;
+}
+table.reference td:nth-child(1) {
+  background-color: #fafafa;
+  width: 200px;
+}
+table.reference td:nth-child(1) {
+  font-weight: bold;
+}
+table.reference td:nth-child(2) {
+  background-color: transparent;
+}
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+  overflow: auto;
+  color: #222;
+}
+body > header {
+  font-size: 2em;
+  font-weight: bold;
+  color: #fff;
+  background-color: #572a79;
+  padding: 1em;
+}
+body > main {
+  min-height: 100vh;
+  display: flex;
+}
+body > main > aside {
+  flex: 0 0 auto;
+  margin-right: 2em;
+  padding: 2em;
+  background-color: #fafafa;
+}
+body > main > content {
+  flex: 1 1 auto;
+  min-height: 100%;
+  padding: 2em;
+  padding-bottom: 10em;
+}
+body > footer {
+  text-align: center;
+  font-size: 70%;
+}
+/**
+ * Layout
+ */
+body > main > aside > nav > ol {
+  margin: 0;
+  padding: 0;
+  padding-left: 1em;
+}
+body > main > aside > nav > ol li > span {
+  font-weight: bold;
+}
+body > main > aside > nav > ol li > a {
+  text-decoration: none;
+  color: #000;
+  display: inline-block;
+}
+body > main > aside > nav > ol li li {
+  margin-bottom: 0.5em;
+}
+body > main > aside > nav > ol ul {
+  margin: 0;
+  padding: 0;
+  padding-left: 1.3em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}

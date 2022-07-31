@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>FAQ - OS.js v2 Manual</title>
+    <meta name="description" content="OS.js Manual - OS.js" />
+    <meta name="keywords" content="OS.js,Documentation,Client,Server,API,Tutorial,Tutorials,Manual,Manuals" />
+
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,600" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism-tomorrow.min.css">
+    <link href="/css/manual.css" rel="stylesheet" />
+
+    <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" href="/favicon.png" />
+    <link rel="author" href="https://plus.google.com/101576798387217383063" />
+    <link rel="publisher" href="https://plus.google.com/101576798387217383063" />
+    <link rel="canonical" href="https://manual-legacy.os-js.org/faq" />
+  </head>
+  <body class="faq">
+    <header>
+      <div>OS.js Manual</div>
+    </header>
+
+    <main>
+      <aside id="sidebar">
+        <nav>
+          <ol>
+            <li>
+              <span>Introduction</span>
+              <ul>
+                <li><a href="/">About</a></li>
+                <li><a href="/community">Community</a></li>
+                <li><a href="/installation">Installation</a></li>
+                <li><a href="/faq">FAQ</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Development</span>
+              <ul>
+                <li><a href="/development/#environment">Environment</a></li>
+                <li><a href="/development/#contributing">Contributing</a></li>
+                <li><a href="/development/#style-guide">Style guide</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Concepts</span>
+              <ul>
+                <li><a href="/concepts/#build-system">Build system</a></li>
+                <li><a href="/concepts/#configuration-system">Configuration system</a></li>
+                <li><a href="/concepts/#client">Client</a></li>
+                <li><a href="/concepts/#server">Server</a></li>
+                <li><a href="/concepts/#modules">Modules</a></li>
+                <li><a href="/concepts/#packages">Packages</a></li>
+                <li><a href="/concepts/#overlays">Overlays</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Configuration</span>
+              <ul>
+                <li><a href="/configuration/">General</a></li>
+                <li><a href="/configuration/#webpack">Webpack</a></li>
+                <li><a href="/configuration/connection">Connection</a></li>
+                <li><a href="/configuration/authenticator">Authenticator</a></li>
+                <li><a href="/configuration/storage">Storage</a></li>
+                <li><a href="/configuration/vfs">VFS</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Packages</span>
+              <ul>
+                <li><a href="/packages">Introduction</a></li>
+                <li><a href="/packages/scheme">Using Scheme</a></li>
+                <li><a href="/packages/vue">Using Vue</a></li>
+                <li><a href="/packages/react">Using React</a></li>
+                <li><a href="/packages/iframe">Using IFrame</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Guides</span>
+              <ul>
+                <li><a href="/guides/authenticator">Authenticator</a></li>
+                <li><a href="/guides/storage">Storage</a></li>
+                <li><a href="/guides/transport">VFS Transport</a></li>
+                <li><a href="/guides/middleware">Middleware</a></li>
+                <li><a href="/guides/service">Service</a></li>
+                <li><a href="/guides/themes">Themes</a></li>
+                <li><a href="/guides/responsive">Responsiveness</a></li>
+                <li><a href="/guides/misc">Misc</a></li>
+              </ul>
+            </li>
+
+          </ol>
+
+        </nav>
+      </aside>
+
+      <content>
+        <div style="padding:1em;margin-bottom:2em;background-color:#e6e6e6;font-size:1.5em;font-weight:bold">
+          OS.js v2 has been deprecated.
+          Head over to <a href="https://manual.os-js.org/">https://manual.os-js.org/</a> for the latest v3 manual.
+        </div>
+        <h1 id="faq">FAQ</h1>
+<p>This is a compiled list of the most frequently asked questions.</p>
+<h2 id="q-i-can-t-connect-to-my-server-what-s-wrong-">Q: I can&#39;t connect to my server. What&#39;s wrong ?</h2>
+<p>When the server starts you should see something like this in the log output:</p>
+<pre><code>Creating http server on ::@8000 with
+</code></pre><p>If it does not bind to what you expect, you can launch the server with <code>--hostname=0.0.0.0</code> (the same applies for the port) to specify where to bind the server.</p>
+<h3 id="q-how-do-i-add-login-for-users-">Q: How do I add login for users ?</h3>
+<p>You need to set up <a href="/configuration/authenticator/">Authentication</a>.</p>
+<h3 id="q-how-do-i-install-a-package-">Q: How do I install a package ?</h3>
+<p>To install a package you have to download it and place it inside a &quot;repository&quot; (aka group) in <code>src/packages</code>.</p>
+<p>After it has been placed into one of these repositories, it has to be added to the global manifest and then built.</p>
+<p>You can read more about it <a href="/packages/">in this article</a>.</p>
+<h3 id="q-why-aren-t-my-packages-showing-up-in-the-client-">Q: Why aren&#39;t my packages showing up in the client ?</h3>
+<p>Did you run <code>node osjs build:manifest</code> ?</p>
+<h3 id="q-why-am-i-getting-preloading-failed-on-my-package-">Q: Why am I getting &#39;preloading failed&#39; on my package ?</h3>
+<p>This usually means that the server responded with a 404 (file not found) or some syntax error in the file prevented it from loading.</p>
+<p>You can see the response in the server log output, or if you&#39;re familiar with browser developer tools, in the &quot;Network&quot; tab.</p>
+<p>Look at the output in <code>node osjs build</code> tasks for errors and warnings.</p>
+<h3 id="q-what-browsers-does-this-run-on-">Q: What browsers does this run on ?</h3>
+<p>Any &quot;modern&quot; browser. In this case IE11 (IE10 might work) or later or any other browser.</p>
+<h3 id="q-can-i-use-this-in-commercial-projects-">Q: Can I use this in commercial projects ?</h3>
+<p>Absolutely! Just make sure to include the license and copyright in your releases and source-code.</p>
+<p>You can read the clauses in the LICENCE file that comes with the source code repository.</p>
+<h3 id="q-where-do-i-get-support-">Q: Where do I get support ?</h3>
+<p>Send me an <a href="mailto:hello@os-js.org">email</a>, come into the <a href="https://gitter.im/os-js/OS.js">chat</a> (where you can do private messaging), or join the <a href="http://community.os.js.org/">forums</a>.</p>
+<h3 id="q-how-do-i-help-out-">Q: How do I help out ?</h3>
+<p>Look at the <a href="https://github.com/os-js/OS.js/blob/master/CONTRIBUTING.md">contribution document</a>.</p>
+
+      </content>
+    </main>
+
+    <footer>
+      <div class="adddshere">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- https://os.js.org (RESPONSIVE) -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-6145716264521226"
+             data-ad-slot="9888011596"
+             data-ad-format="auto"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
+
+      <p>OS.js &copy; Anders Evenrud 2011-2017</p>
+      <p>Generated with Metalsmith</p>
+    </footer>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90971004-7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-90971004-7');
+    </script>
+
+    <script>
+      ((window.gitter = {}).chat = {}).options = {
+        room: 'os-js/OS.js'
+      };
+    </script>
+    <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
+
+    <script>
+document.getElementById('Search').onsubmit = function(ev) {
+  ev.preventDefault();
+
+  var v = document.getElementById('SearchQuery').value;
+  var q = 'site:os.js.org ' + encodeURIComponent(String(v));
+  window.location = 'https://google.com/search?q=' + q;
+
+  return false;
+};
+    </script>
+
+  </body>
+</html>

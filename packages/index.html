@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>Introduction to packages - OS.js v2 Manual</title>
+    <meta name="description" content="OS.js Manual - OS.js" />
+    <meta name="keywords" content="OS.js,Documentation,Client,Server,API,Tutorial,Tutorials,Manual,Manuals" />
+
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,600" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism-tomorrow.min.css">
+    <link href="/css/manual.css" rel="stylesheet" />
+
+    <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" href="/favicon.png" />
+    <link rel="author" href="https://plus.google.com/101576798387217383063" />
+    <link rel="publisher" href="https://plus.google.com/101576798387217383063" />
+    <link rel="canonical" href="https://manual-legacy.os-js.org/packages" />
+  </head>
+  <body class="packages">
+    <header>
+      <div>OS.js Manual</div>
+    </header>
+
+    <main>
+      <aside id="sidebar">
+        <nav>
+          <ol>
+            <li>
+              <span>Introduction</span>
+              <ul>
+                <li><a href="/">About</a></li>
+                <li><a href="/community">Community</a></li>
+                <li><a href="/installation">Installation</a></li>
+                <li><a href="/faq">FAQ</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Development</span>
+              <ul>
+                <li><a href="/development/#environment">Environment</a></li>
+                <li><a href="/development/#contributing">Contributing</a></li>
+                <li><a href="/development/#style-guide">Style guide</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Concepts</span>
+              <ul>
+                <li><a href="/concepts/#build-system">Build system</a></li>
+                <li><a href="/concepts/#configuration-system">Configuration system</a></li>
+                <li><a href="/concepts/#client">Client</a></li>
+                <li><a href="/concepts/#server">Server</a></li>
+                <li><a href="/concepts/#modules">Modules</a></li>
+                <li><a href="/concepts/#packages">Packages</a></li>
+                <li><a href="/concepts/#overlays">Overlays</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Configuration</span>
+              <ul>
+                <li><a href="/configuration/">General</a></li>
+                <li><a href="/configuration/#webpack">Webpack</a></li>
+                <li><a href="/configuration/connection">Connection</a></li>
+                <li><a href="/configuration/authenticator">Authenticator</a></li>
+                <li><a href="/configuration/storage">Storage</a></li>
+                <li><a href="/configuration/vfs">VFS</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Packages</span>
+              <ul>
+                <li><a href="/packages">Introduction</a></li>
+                <li><a href="/packages/scheme">Using Scheme</a></li>
+                <li><a href="/packages/vue">Using Vue</a></li>
+                <li><a href="/packages/react">Using React</a></li>
+                <li><a href="/packages/iframe">Using IFrame</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Guides</span>
+              <ul>
+                <li><a href="/guides/authenticator">Authenticator</a></li>
+                <li><a href="/guides/storage">Storage</a></li>
+                <li><a href="/guides/transport">VFS Transport</a></li>
+                <li><a href="/guides/middleware">Middleware</a></li>
+                <li><a href="/guides/service">Service</a></li>
+                <li><a href="/guides/themes">Themes</a></li>
+                <li><a href="/guides/responsive">Responsiveness</a></li>
+                <li><a href="/guides/misc">Misc</a></li>
+              </ul>
+            </li>
+
+          </ol>
+
+        </nav>
+      </aside>
+
+      <content>
+        <div style="padding:1em;margin-bottom:2em;background-color:#e6e6e6;font-size:1.5em;font-weight:bold">
+          OS.js v2 has been deprecated.
+          Head over to <a href="https://manual.os-js.org/">https://manual.os-js.org/</a> for the latest v3 manual.
+        </div>
+        <h1 id="introduction-to-packages">Introduction to packages</h1>
+<p>To make a package, run <code>node osjs generate:package --name=REPO/NAME --type=TYPE</code>.</p>
+<h2 id="package-naming">Package naming</h2>
+<p>A package is grouped by a &quot;repository&quot;, so prefix your name with ex: <code>default/MyPackageName</code> (this will place it inside the default provided repository in <code>src/packages</code>).</p>
+<h2 id="package-types">Package types</h2>
+<p>These are the types:</p>
+<ul>
+<li><code>application</code>: The default application. Comes with example window and server API.</li>
+<li><code>service</code>: A service that runs in the background.</li>
+<li><code>iframe-application</code>: An application that opens a window with an iframe.</li>
+<li><code>extension</code>: Generic module that is loaded upon start.</li>
+</ul>
+<h2 id="package-metadata">Package metadata</h2>
+<p>The package is generated with a metadata file along with the normal sources. This file describes the package and how it is loaded.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+<th>Required</th>
+<th>Default</th>
+<th>Restriction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>className</td>
+<td>Name of package in client namespace</td>
+<td>Yes</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>enabled</td>
+<td>Global enabled state</td>
+<td>No</td>
+<td>true</td>
+<td></td>
+</tr>
+<tr>
+<td>singular</td>
+<td>Only allow one running instance</td>
+<td>No</td>
+<td>false</td>
+<td></td>
+</tr>
+<tr>
+<td>autostart</td>
+<td>Automatically start on boot</td>
+<td>No</td>
+<td>false</td>
+<td></td>
+</tr>
+<tr>
+<td>name</td>
+<td>A name (title)</td>
+<td>Yes</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>description</td>
+<td>A short description</td>
+<td>Yes</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>category</td>
+<td>A category <sup>1</sup></td>
+<td>No</td>
+<td>other</td>
+<td></td>
+</tr>
+<tr>
+<td>visible</td>
+<td>Used for visibility in application launch menu etc.</td>
+<td>No</td>
+<td>true</td>
+<td></td>
+</tr>
+<tr>
+<td>icon</td>
+<td>A icon</td>
+<td>Yes</td>
+<td></td>
+<td>Application</td>
+</tr>
+<tr>
+<td>names</td>
+<td>A map of locales and translated names</td>
+<td>No</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>descriptions</td>
+<td>A map of locales and translated descriptions</td>
+<td>No</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>mime</td>
+<td>An array of what MIME types is supported</td>
+<td>No</td>
+<td></td>
+<td>Application</td>
+</tr>
+<tr>
+<td>compability</td>
+<td>An array of what features to check for support</td>
+<td>No</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>preload</td>
+<td>An array of static resources to load</td>
+<td>Yes</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>depends</td>
+<td>An array of dependent packages to load first</td>
+<td>No</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>uses</td>
+<td>An array of package names that autoload this package</td>
+<td>No</td>
+<td></td>
+<td>Extension</td>
+</tr>
+<tr>
+<td>spawn.enable</td>
+<td>A boolean to enable the given spawned</td>
+<td>No</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>spawn.exec</td>
+<td>A path to a node script to spawn on load</td>
+<td>No</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>build.copy</td>
+<td>An array of filenames to copy into the package dist <sup>2</sup></td>
+<td>No</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>main.node</td>
+<td>A string that resolves the entry point for node</td>
+<td>Yes</td>
+<td>server/main.js</td>
+<td></td>
+</tr>
+<tr>
+<td>main.php</td>
+<td>A string that resolves the entry point for PHP</td>
+<td>Yes</td>
+<td>server/main.php</td>
+<td></td>
+</tr>
+<tr>
+<td>main.webpack</td>
+<td>An array of strings that is used for webpack entries</td>
+<td>Yes</td>
+<td>main.js,main.css</td>
+</tr>
+</tbody>
+</table>
+<p><sup>1</sup> - Available categories: development, education, games, graphics, network, multimedia, office, system, utilities.</p>
+<p><sup>2</sup> - You can also use alternate formats. Look at the <a href="https://github.com/kevlened/copy-webpack-plugin">webpack plugin documentation</a> for more information.</p>
+<h2 id="installation">Installation</h2>
+<p>Usually installing of a package is done like this:</p>
+<pre class="language-bash"><code class="language-bash">$ <span class="token function">mkdir</span> src/packages/myrepo
+$ <span class="token function">git</span> clone http://github.com/user/mypackage.git src/packages/myrepo/mypackage
+$ <span class="token function">node</span> osjs config:add --name<span class="token operator">=</span>repositories --value<span class="token operator">=</span>myrepo
+$ <span class="token function">node</span> osjs build:manifest
+$ <span class="token function">node</span> osjs build:package --name<span class="token operator">=</span>myrepo/mypackage
+</code></pre>
+<p>You can also use the provided helper scripts:</p>
+<pre class="language-bash"><code class="language-bash"><span class="token comment"># Install a repository with many packages</span>
+$ ./bin/add-package-repository.sh myrepo http://github.com/user/myrepo.git
+
+<span class="token comment"># Or just a single package as described above:</span>
+$ ./bin/add-package.sh myrepo mypackage http://github.com/user/mypackage.git
+</code></pre>
+<p>For more information on commands see <a href="/configuration">configuration</a>.</p>
+<h2 id="development">Development</h2>
+<p>Packages are built with <strong>Webpack</strong> and is written in ES6, so you have a lot of flexibility.</p>
+<p>You can watch your package with: <code>node osjs watch --package=myrepo/mypackage</code>.</p>
+<p>To reload your package in the client, run <code>OSjs.require(&apos;core/process&apos;).reload(&apos;ApplicationSomething&apos;)</code> where the name is your <code>className</code> definition (in the developer tools in your browser).</p>
+<p>Look at <a href="/development">development pages</a> for more information.</p>
+<h2 id="building">Building</h2>
+<p>To make OS.js recognize your package, you first have to run <code>node osjs build:manifest</code> to add it to the global manifest. You also have to run this command whenever you change your metadata file.</p>
+<p>You can run <code>node osjs build:package --name=REPO/NAME</code> to manually build your package. You can also put up a watcher with <code>node osjs watch --package=REPO/NAME</code>.</p>
+
+      </content>
+    </main>
+
+    <footer>
+      <div class="adddshere">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- https://os.js.org (RESPONSIVE) -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-6145716264521226"
+             data-ad-slot="9888011596"
+             data-ad-format="auto"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
+
+      <p>OS.js &copy; Anders Evenrud 2011-2017</p>
+      <p>Generated with Metalsmith</p>
+    </footer>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90971004-7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-90971004-7');
+    </script>
+
+    <script>
+      ((window.gitter = {}).chat = {}).options = {
+        room: 'os-js/OS.js'
+      };
+    </script>
+    <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
+
+    <script>
+document.getElementById('Search').onsubmit = function(ev) {
+  ev.preventDefault();
+
+  var v = document.getElementById('SearchQuery').value;
+  var q = 'site:os.js.org ' + encodeURIComponent(String(v));
+  window.location = 'https://google.com/search?q=' + q;
+
+  return false;
+};
+    </script>
+
+  </body>
+</html>

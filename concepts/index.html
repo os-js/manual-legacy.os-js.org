@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>Concepts - OS.js v2 Manual</title>
+    <meta name="description" content="OS.js Manual - OS.js" />
+    <meta name="keywords" content="OS.js,Documentation,Client,Server,API,Tutorial,Tutorials,Manual,Manuals" />
+
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,600" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism-tomorrow.min.css">
+    <link href="/css/manual.css" rel="stylesheet" />
+
+    <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" href="/favicon.png" />
+    <link rel="author" href="https://plus.google.com/101576798387217383063" />
+    <link rel="publisher" href="https://plus.google.com/101576798387217383063" />
+    <link rel="canonical" href="https://manual-legacy.os-js.org/concepts" />
+  </head>
+  <body class="concepts">
+    <header>
+      <div>OS.js Manual</div>
+    </header>
+
+    <main>
+      <aside id="sidebar">
+        <nav>
+          <ol>
+            <li>
+              <span>Introduction</span>
+              <ul>
+                <li><a href="/">About</a></li>
+                <li><a href="/community">Community</a></li>
+                <li><a href="/installation">Installation</a></li>
+                <li><a href="/faq">FAQ</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Development</span>
+              <ul>
+                <li><a href="/development/#environment">Environment</a></li>
+                <li><a href="/development/#contributing">Contributing</a></li>
+                <li><a href="/development/#style-guide">Style guide</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Concepts</span>
+              <ul>
+                <li><a href="/concepts/#build-system">Build system</a></li>
+                <li><a href="/concepts/#configuration-system">Configuration system</a></li>
+                <li><a href="/concepts/#client">Client</a></li>
+                <li><a href="/concepts/#server">Server</a></li>
+                <li><a href="/concepts/#modules">Modules</a></li>
+                <li><a href="/concepts/#packages">Packages</a></li>
+                <li><a href="/concepts/#overlays">Overlays</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Configuration</span>
+              <ul>
+                <li><a href="/configuration/">General</a></li>
+                <li><a href="/configuration/#webpack">Webpack</a></li>
+                <li><a href="/configuration/connection">Connection</a></li>
+                <li><a href="/configuration/authenticator">Authenticator</a></li>
+                <li><a href="/configuration/storage">Storage</a></li>
+                <li><a href="/configuration/vfs">VFS</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Packages</span>
+              <ul>
+                <li><a href="/packages">Introduction</a></li>
+                <li><a href="/packages/scheme">Using Scheme</a></li>
+                <li><a href="/packages/vue">Using Vue</a></li>
+                <li><a href="/packages/react">Using React</a></li>
+                <li><a href="/packages/iframe">Using IFrame</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Guides</span>
+              <ul>
+                <li><a href="/guides/authenticator">Authenticator</a></li>
+                <li><a href="/guides/storage">Storage</a></li>
+                <li><a href="/guides/transport">VFS Transport</a></li>
+                <li><a href="/guides/middleware">Middleware</a></li>
+                <li><a href="/guides/service">Service</a></li>
+                <li><a href="/guides/themes">Themes</a></li>
+                <li><a href="/guides/responsive">Responsiveness</a></li>
+                <li><a href="/guides/misc">Misc</a></li>
+              </ul>
+            </li>
+
+          </ol>
+
+        </nav>
+      </aside>
+
+      <content>
+        <div style="padding:1em;margin-bottom:2em;background-color:#e6e6e6;font-size:1.5em;font-weight:bold">
+          OS.js v2 has been deprecated.
+          Head over to <a href="https://manual.os-js.org/">https://manual.os-js.org/</a> for the latest v3 manual.
+        </div>
+        <h1 id="concepts">Concepts</h1>
+<h2 id="build-system">Build System</h2>
+<p>The build system consits of two parts: A <em>task runner</em> (Ygor) and <em>Webpack</em>.</p>
+<p>All tasks are run via the <code>osjs</code> tool, but the build process itself takes place in Webpack.</p>
+<p>The build setup can be changed with the configuration system (explained below).</p>
+<h2 id="configuration-system">Configuration System</h2>
+<p>The configuration is managed with JSON files in <code>src/conf</code>. These are prefixed with a number because they are loaded in sequence and merged together, which produces an entire tree.</p>
+<p>You can manipulate the settings by changing the supplied files, adding your own, or use the <code>osjs</code> tool.</p>
+<p>Please note that Arrays are not merged together.</p>
+<p>For more information <a href="/configuration">look in the configuration manual</a>.</p>
+<h2 id="client">Client</h2>
+<p>The client is the main application that runs in a browser environment.</p>
+<p>It&#39;s built using Webpack and ES6, so everything is separated into individual modules.</p>
+<p>The &quot;client&quot; contains all core APIs, and the main graphical environment (window manager and desktop) is in a separate package which is launched upon boot (by default the &quot;default/CoreWM&quot; package).</p>
+<h2 id="server">Server</h2>
+<p>A HTTP server to host the client files and server APIs. Is a available in two flavors: Node (Express) and PHP.</p>
+<p><strong>Please note that the PHP server is missing some features and might be moved into a separate project</strong>.</p>
+<h2 id="modules">Modules</h2>
+<p>Both the server and client can be extended via modules. These come in several types:</p>
+<ul>
+<li><strong>Connection</strong> Establishes connection and handles requests</li>
+<li><strong>Authenticator</strong> Handles authentication, user groups and other user things</li>
+<li><strong>Storage</strong> Handles settings and general storage (like sessions and settings)</li>
+<li><strong>Middleware</strong> Handles HTTP requests on the server</li>
+<li><strong>Service</strong> A service running alongside server</li>
+<li><strong>VFS Transport</strong> For manipulating files from a certain source or filesystem</li>
+<li><strong>Themes</strong> Visual stylings etc</li>
+</ul>
+<p>You can find more information about these in the menu.</p>
+<h2 id="packages">Packages</h2>
+<p>There are several types of packages:</p>
+<ul>
+<li><strong>Application</strong> A normal application</li>
+<li><strong>Service</strong> An application that runs in the background</li>
+<li><strong>Extension</strong> Can be used to extend or hook into the internal APIs</li>
+<li><strong>Iframe</strong> An application with a dedicated iframe window</li>
+</ul>
+<p>All packages has a metadata file (<code>metadata.json</code>) that contains information about the package in general and also what files it should use.</p>
+<p>The package metadata files are built into a final <em>manifest file</em> that the client uses to populate its Package Manager.</p>
+<p>For more information <a href="/packages">look in the packages manual</a>.</p>
+<h2 id="overlays">Overlays</h2>
+<p>Instead of making changes to the base repository, you can very easily add overlays to include your own code and packages, etc.</p>
+<p>An overlay is organized just like in <code>src/</code> and will be loaded into the build/configuration system automatically once added.</p>
+<p>An example overlay <a href="https://github.com/andersevenrud/osjs-example-overlay">is available on Github</a>.</p>
+<p>For more information on configuration <a href="/configuration/#adding-overlays">look in the configuration manual</a>.</p>
+
+      </content>
+    </main>
+
+    <footer>
+      <div class="adddshere">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- https://os.js.org (RESPONSIVE) -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-6145716264521226"
+             data-ad-slot="9888011596"
+             data-ad-format="auto"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
+
+      <p>OS.js &copy; Anders Evenrud 2011-2017</p>
+      <p>Generated with Metalsmith</p>
+    </footer>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90971004-7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-90971004-7');
+    </script>
+
+    <script>
+      ((window.gitter = {}).chat = {}).options = {
+        room: 'os-js/OS.js'
+      };
+    </script>
+    <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
+
+    <script>
+document.getElementById('Search').onsubmit = function(ev) {
+  ev.preventDefault();
+
+  var v = document.getElementById('SearchQuery').value;
+  var q = 'site:os.js.org ' + encodeURIComponent(String(v));
+  window.location = 'https://google.com/search?q=' + q;
+
+  return false;
+};
+    </script>
+
+  </body>
+</html>

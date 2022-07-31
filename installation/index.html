@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>Installation - OS.js v2 Manual</title>
+    <meta name="description" content="OS.js Manual - OS.js" />
+    <meta name="keywords" content="OS.js,Documentation,Client,Server,API,Tutorial,Tutorials,Manual,Manuals" />
+
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,600" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism-tomorrow.min.css">
+    <link href="/css/manual.css" rel="stylesheet" />
+
+    <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" href="/favicon.png" />
+    <link rel="author" href="https://plus.google.com/101576798387217383063" />
+    <link rel="publisher" href="https://plus.google.com/101576798387217383063" />
+    <link rel="canonical" href="https://manual-legacy.os-js.org/installation" />
+  </head>
+  <body class="installation">
+    <header>
+      <div>OS.js Manual</div>
+    </header>
+
+    <main>
+      <aside id="sidebar">
+        <nav>
+          <ol>
+            <li>
+              <span>Introduction</span>
+              <ul>
+                <li><a href="/">About</a></li>
+                <li><a href="/community">Community</a></li>
+                <li><a href="/installation">Installation</a></li>
+                <li><a href="/faq">FAQ</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Development</span>
+              <ul>
+                <li><a href="/development/#environment">Environment</a></li>
+                <li><a href="/development/#contributing">Contributing</a></li>
+                <li><a href="/development/#style-guide">Style guide</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Concepts</span>
+              <ul>
+                <li><a href="/concepts/#build-system">Build system</a></li>
+                <li><a href="/concepts/#configuration-system">Configuration system</a></li>
+                <li><a href="/concepts/#client">Client</a></li>
+                <li><a href="/concepts/#server">Server</a></li>
+                <li><a href="/concepts/#modules">Modules</a></li>
+                <li><a href="/concepts/#packages">Packages</a></li>
+                <li><a href="/concepts/#overlays">Overlays</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Configuration</span>
+              <ul>
+                <li><a href="/configuration/">General</a></li>
+                <li><a href="/configuration/#webpack">Webpack</a></li>
+                <li><a href="/configuration/connection">Connection</a></li>
+                <li><a href="/configuration/authenticator">Authenticator</a></li>
+                <li><a href="/configuration/storage">Storage</a></li>
+                <li><a href="/configuration/vfs">VFS</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Packages</span>
+              <ul>
+                <li><a href="/packages">Introduction</a></li>
+                <li><a href="/packages/scheme">Using Scheme</a></li>
+                <li><a href="/packages/vue">Using Vue</a></li>
+                <li><a href="/packages/react">Using React</a></li>
+                <li><a href="/packages/iframe">Using IFrame</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Guides</span>
+              <ul>
+                <li><a href="/guides/authenticator">Authenticator</a></li>
+                <li><a href="/guides/storage">Storage</a></li>
+                <li><a href="/guides/transport">VFS Transport</a></li>
+                <li><a href="/guides/middleware">Middleware</a></li>
+                <li><a href="/guides/service">Service</a></li>
+                <li><a href="/guides/themes">Themes</a></li>
+                <li><a href="/guides/responsive">Responsiveness</a></li>
+                <li><a href="/guides/misc">Misc</a></li>
+              </ul>
+            </li>
+
+          </ol>
+
+        </nav>
+      </aside>
+
+      <content>
+        <div style="padding:1em;margin-bottom:2em;background-color:#e6e6e6;font-size:1.5em;font-weight:bold">
+          OS.js v2 has been deprecated.
+          Head over to <a href="https://manual.os-js.org/">https://manual.os-js.org/</a> for the latest v3 manual.
+        </div>
+        <h1 id="installation">Installation</h1>
+<p>To install <strong>OS.js</strong> you need these dependencies installed:</p>
+<ul>
+<li>Node v6 or newer</li>
+<li>Git</li>
+</ul>
+<p><em>Debian and Ubuntu users, you&apos;ll need the <code>nodejs-legacy</code> package</em>.</p>
+<h2 id="installation">Installation</h2>
+<pre class="language-bash"><code class="language-bash">$ <span class="token function">git</span> clone -b v2 --single-branch https://github.com/os-js/OS.js.git
+$ <span class="token builtin class-name">cd</span> OS.js
+
+$ <span class="token function">npm</span> <span class="token function">install</span>
+$ <span class="token function">node</span> osjs build
+$ <span class="token function">node</span> osjs run
+</code></pre>
+<p><strong>That&apos;s it!</strong> You should now have a running server. Simply open <code>http://localhost:8000</code> to give it a go.</p>
+<p><em>Optionally change host and or port</em>.</p>
+<pre class="language-bash"><code class="language-bash"><span class="token comment"># If you have multiple interfaces you can choose which one to bind.</span>
+<span class="token comment"># 0.0.0.0 may be changed to your IP address of choice.</span>
+$ <span class="token function">node</span> osjs run --hostname<span class="token operator">=</span><span class="token number">0.0</span>.0.0 --port<span class="token operator">=</span><span class="token number">8080</span>
+</code></pre>
+<h2 id="upgrading">Upgrading</h2>
+<pre class="language-bash"><code class="language-bash">$ <span class="token function">git</span> pull
+$ <span class="token function">npm</span> <span class="token function">install</span>
+$ <span class="token function">node</span> osjs build
+</code></pre>
+<p><em>Remember to restart the server afterwards</em>.</p>
+<h2 id="reverse-proxy">Reverse-Proxy</h2>
+<p>For best performance and reliability, you should run a reverse-proxy in front of the node server:</p>
+<h3 id="nginx">nginx</h3>
+<pre class="language-bash"><code class="language-bash">server <span class="token punctuation">{</span>
+    listen <span class="token number">80</span><span class="token punctuation">;</span>
+
+    server_name osjs.local<span class="token punctuation">;</span>
+
+    location / <span class="token punctuation">{</span> <span class="token comment"># Leading slash!</span>
+        proxy_set_header Host <span class="token variable">$host</span><span class="token punctuation">;</span>
+        proxy_set_header X-Real-IP <span class="token variable">$remote_addr</span><span class="token punctuation">;</span>
+        proxy_set_header X-Forwarded-For <span class="token variable">$proxy_add_x_forwarded_for</span><span class="token punctuation">;</span>
+        proxy_set_header X-Forwarded-Proto <span class="token variable">$scheme</span><span class="token punctuation">;</span>
+        proxy_pass http://localhost:8000/<span class="token punctuation">;</span> <span class="token comment"># The leading slash!</span>
+        proxy_redirect off<span class="token punctuation">;</span> <span class="token comment"># Also note this</span>
+        proxy_http_version <span class="token number">1.1</span><span class="token punctuation">;</span>
+        proxy_set_header Upgrade <span class="token variable">$http_upgrade</span><span class="token punctuation">;</span>
+        proxy_set_header Connection <span class="token string">&apos;upgrade&apos;</span><span class="token punctuation">;</span>
+        proxy_set_header Host <span class="token variable">$host</span><span class="token punctuation">;</span>
+        proxy_cache_bypass <span class="token variable">$http_upgrade</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+</code></pre>
+<h3 id="apache">apache</h3>
+<pre class="language-bash"><code class="language-bash">$ <span class="token function">sudo</span> a2enmod proxy
+$ <span class="token function">sudo</span> a2enmod proxy_http
+</code></pre>
+<pre class="language-bash"><code class="language-bash"><span class="token operator">&lt;</span>VirtualHost *:8<span class="token operator"><span class="token file-descriptor important">0</span>&gt;</span>
+  ServerName osjs.domain.no
+  ProxyPass / http://localhost:8000/
+<span class="token operator">&lt;</span>/VirtualHost<span class="token operator">&gt;</span>
+</code></pre>
+<h2 id="using-a-webserver">Using a Webserver</h2>
+<p>If you want to use the PHP server you&apos;ll need to configure your webserver. To generate a sample configuration, run:</p>
+<pre class="language-bash"><code class="language-bash"><span class="token comment"># Apache htaccess (Required if you want to use apache)</span>
+$ <span class="token function">node</span> osjs generate:config --type<span class="token operator">=</span>htaccess --env<span class="token operator">=</span>prod
+
+<span class="token comment"># Apache vhost</span>
+$ <span class="token function">node</span> osjs generate:config --type<span class="token operator">=</span>apache --env<span class="token operator">=</span>prod
+
+<span class="token comment"># Lighttpd</span>
+$ <span class="token function">node</span> osjs generate:config --type<span class="token operator">=</span>lighttpd --env<span class="token operator">=</span>prod
+
+<span class="token comment"># Nginx</span>
+$ <span class="token function">node</span> osjs generate:config --type<span class="token operator">=</span>nginx --env<span class="token operator">=</span>prod
+</code></pre>
+<h2 id="standalone-builds">Standalone builds</h2>
+<p>If you want to build OS.js completely standalone (to run from ex <code>file://</code>), simply use the <code>--standalone</code> flag when building and the <code>dist</code> directory is directly ready for usage.</p>
+<h2 id="webhosts">Webhosts</h2>
+<p>If you own a c-panel instance (or similar with PHP) and don&apos;t have direct access to the filesystem or shell (or simply no Node support), you can copy the installation over to your public root and run via <code>/OS.js/dist</code>.</p>
+<p>If you want to serve the installation within a custom path, like ex. <code>/osjs/</code> you&apos;ll have to manually do some operations before copying:</p>
+<pre class="language-bash"><code class="language-bash">$ <span class="token function">node</span> osjs config:set --name<span class="token operator">=</span>server.vfs.mounts.home --value<span class="token operator">=</span><span class="token string">&quot;%SROOT%/vfs/home/%USERNAME%&quot;</span>
+$ <span class="token function">node</span> osjs build:config
+$ <span class="token function">cp</span> -r src/server/php dist/server
+$ edit dist/api.php
+</code></pre>
+
+      </content>
+    </main>
+
+    <footer>
+      <div class="adddshere">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- https://os.js.org (RESPONSIVE) -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-6145716264521226"
+             data-ad-slot="9888011596"
+             data-ad-format="auto"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
+
+      <p>OS.js &copy; Anders Evenrud 2011-2017</p>
+      <p>Generated with Metalsmith</p>
+    </footer>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90971004-7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-90971004-7');
+    </script>
+
+    <script>
+      ((window.gitter = {}).chat = {}).options = {
+        room: 'os-js/OS.js'
+      };
+    </script>
+    <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
+
+    <script>
+document.getElementById('Search').onsubmit = function(ev) {
+  ev.preventDefault();
+
+  var v = document.getElementById('SearchQuery').value;
+  var q = 'site:os.js.org ' + encodeURIComponent(String(v));
+  window.location = 'https://google.com/search?q=' + q;
+
+  return false;
+};
+    </script>
+
+  </body>
+</html>

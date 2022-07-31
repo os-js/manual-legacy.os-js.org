@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>Using Scheme - OS.js v2 Manual</title>
+    <meta name="description" content="OS.js Manual - OS.js" />
+    <meta name="keywords" content="OS.js,Documentation,Client,Server,API,Tutorial,Tutorials,Manual,Manuals" />
+
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,600" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism-tomorrow.min.css">
+    <link href="/css/manual.css" rel="stylesheet" />
+
+    <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" href="/favicon.png" />
+    <link rel="author" href="https://plus.google.com/101576798387217383063" />
+    <link rel="publisher" href="https://plus.google.com/101576798387217383063" />
+    <link rel="canonical" href="https://manual-legacy.os-js.org/packages/scheme" />
+  </head>
+  <body class="packages_scheme">
+    <header>
+      <div>OS.js Manual</div>
+    </header>
+
+    <main>
+      <aside id="sidebar">
+        <nav>
+          <ol>
+            <li>
+              <span>Introduction</span>
+              <ul>
+                <li><a href="/">About</a></li>
+                <li><a href="/community">Community</a></li>
+                <li><a href="/installation">Installation</a></li>
+                <li><a href="/faq">FAQ</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Development</span>
+              <ul>
+                <li><a href="/development/#environment">Environment</a></li>
+                <li><a href="/development/#contributing">Contributing</a></li>
+                <li><a href="/development/#style-guide">Style guide</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Concepts</span>
+              <ul>
+                <li><a href="/concepts/#build-system">Build system</a></li>
+                <li><a href="/concepts/#configuration-system">Configuration system</a></li>
+                <li><a href="/concepts/#client">Client</a></li>
+                <li><a href="/concepts/#server">Server</a></li>
+                <li><a href="/concepts/#modules">Modules</a></li>
+                <li><a href="/concepts/#packages">Packages</a></li>
+                <li><a href="/concepts/#overlays">Overlays</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Configuration</span>
+              <ul>
+                <li><a href="/configuration/">General</a></li>
+                <li><a href="/configuration/#webpack">Webpack</a></li>
+                <li><a href="/configuration/connection">Connection</a></li>
+                <li><a href="/configuration/authenticator">Authenticator</a></li>
+                <li><a href="/configuration/storage">Storage</a></li>
+                <li><a href="/configuration/vfs">VFS</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Packages</span>
+              <ul>
+                <li><a href="/packages">Introduction</a></li>
+                <li><a href="/packages/scheme">Using Scheme</a></li>
+                <li><a href="/packages/vue">Using Vue</a></li>
+                <li><a href="/packages/react">Using React</a></li>
+                <li><a href="/packages/iframe">Using IFrame</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Guides</span>
+              <ul>
+                <li><a href="/guides/authenticator">Authenticator</a></li>
+                <li><a href="/guides/storage">Storage</a></li>
+                <li><a href="/guides/transport">VFS Transport</a></li>
+                <li><a href="/guides/middleware">Middleware</a></li>
+                <li><a href="/guides/service">Service</a></li>
+                <li><a href="/guides/themes">Themes</a></li>
+                <li><a href="/guides/responsive">Responsiveness</a></li>
+                <li><a href="/guides/misc">Misc</a></li>
+              </ul>
+            </li>
+
+          </ol>
+
+        </nav>
+      </aside>
+
+      <content>
+        <div style="padding:1em;margin-bottom:2em;background-color:#e6e6e6;font-size:1.5em;font-weight:bold">
+          OS.js v2 has been deprecated.
+          Head over to <a href="https://manual.os-js.org/">https://manual.os-js.org/</a> for the latest v3 manual.
+        </div>
+        <h1 id="using-scheme">Using Scheme</h1>
+<p>The <code>Scheme</code> file is the default provided way to build User Interfaces. This is normal HTML with custom tags for OS.js components.</p>
+<h2 id="example">Example</h2>
+<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>application-window</span> <span class="token attr-name">data-id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>SchemeTestWindow<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>gui-vbox</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>gui-vbox-container</span> <span class="token attr-name">data-grow</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>0<span class="token punctuation">&quot;</span></span> <span class="token attr-name">data-shrink</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>1<span class="token punctuation">&quot;</span></span> <span class="token attr-name">data-basis</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>auto<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+
+      <span class="token comment">&lt;!-- Fragment within this file --&gt;</span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>gui-fragment</span> <span class="token attr-name">data-fragment-id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>MenuBar<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>gui-vbox-container</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>gui-vbox-container</span> <span class="token attr-name">data-grow</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>1<span class="token punctuation">&quot;</span></span> <span class="token attr-name">data-shrink</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>0<span class="token punctuation">&quot;</span></span> <span class="token attr-name">data-basis</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>auto<span class="token punctuation">&quot;</span></span> <span class="token attr-name">data-fill</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>true<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+
+      <span class="token comment">&lt;!-- Fragment from external file --&gt;</span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>gui-fragment</span> <span class="token attr-name">data-fragment-external</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>scheme-part.html<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>gui-vbox-container</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>gui-vbox</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>application-window</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>application-fragment</span> <span class="token attr-name">data-id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>MenuBar<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>gui-menu-bar</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>gui-menu-bar-entry</span> <span class="token attr-name">data-label</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>LBL_FILE<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>gui-menu</span> <span class="token attr-name">data-id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>SubmenuFile<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>gui-menu-entry</span> <span class="token attr-name">data-id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>MenuClose<span class="token punctuation">&quot;</span></span> <span class="token attr-name">data-label</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>LBL_CLOSE<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>gui-menu-entry</span><span class="token punctuation">&gt;</span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>gui-menu</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>gui-menu-bar-entry</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>gui-menu-bar</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>application-fragment</span><span class="token punctuation">&gt;</span></span>
+</code></pre>
+<h2 id="gui-elements">GUI Elements</h2>
+<p>GUI Elements are comprised of regular HTML, JavaScript and CSS.</p>
+<p>For methods see <a href="/guides/misc/">Misc modules</a>.</p>
+<h3 id="elements">Elements</h3>
+<p>Elements are speparated into these categories:</p>
+<ol>
+<li><a href="#containers">Containers</a></li>
+<li><a href="#media">Media</a></li>
+<li><a href="#input">Input</a></li>
+<li><a href="#views">Views</a></li>
+<li><a href="#misc">Misc</a></li>
+</ol>
+<h4 id="containers">Containers</h4>
+<h5 id="gui-vbox">gui-vbox</h5>
+<p>A container with vertical (rows) that you can shrink/expand, also make content expand or fill.</p>
+<p><img src="/images/gui/gui-vbox.png" alt="gui-vbox"></p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>gui-vbox-container</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/element.js~GUIElement.html">Overview</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="gui-hbox">gui-hbox</h5>
+<p>A container with horizontal (columns) that you can shrink/expand, also make content expand or fill.</p>
+<p><img src="/images/gui/gui-hbox.png" alt="gui-hbox"></p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>gui-hbox-container</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/element.js~GUIElement.html">Overview</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="gui-paned-view">gui-paned-view</h5>
+<p>A container with horizontal (columns) that you can shrink/expand, also make content expand or fill.</p>
+<p><img src="/images/gui/gui-paned-view.png" alt="gui-paned-view"></p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>gui-paned-view-container</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/element.js~GUIElement.html">Overview</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="gui-tabs">gui-tabs</h5>
+<p>A tabbed container.</p>
+<p><img src="/images/gui/gui-tabs.png" alt="gui-tabs"></p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>gui-tab-container</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/element.js~GUIElement.html">Overview</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="gui-toolbar">gui-toolbar</h5>
+<p>A container for holding buttons, etc.</p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>all</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/element.js~GUIElement.html">Overview</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="gui-button-bar">gui-button-bar</h5>
+<p>Works like a toolbar, but is made for holding buttons with user-defined position(s).</p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>all</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/element.js~GUIElement.html">Overview</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<hr>
+<h4 id="media">Media</h4>
+<h5 id="gui-image">gui-image</h5>
+<p>A normal image.</p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/element.js~GUIElement.html">Overview</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="gui-canvas">gui-canvas</h5>
+<p>A paintable image (no actual painting included)</p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/element.js~GUIElement.html">Overview</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="gui-audio">gui-audio</h5>
+<p>Play sounds or music.</p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/element.js~GUIElement.html">Overview</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="gui-video">gui-video</h5>
+<p>Display a video.</p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/element.js~GUIElement.html">Overview</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="gui-iframe">gui-iframe</h5>
+<p>Display a iframe.</p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/element.js~GUIElement.html">Overview</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<hr>
+<h4 id="input">Input</h4>
+<h5 id="gui-label">gui-label</h5>
+<p>Display a normal text label.</p>
+<p><img src="/images/gui/gui-label.png" alt="gui-label"></p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/element.js~GUIElement.html">Overview</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="gui-button">gui-button</h5>
+<p>A button made for clicking!</p>
+<p><img src="/images/gui/gui-button.png" alt="gui-button"></p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/element.js~GUIElement.html">Overview</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="gui-switch">gui-switch</h5>
+<p>A button, but works more like a light-switch.</p>
+<p><img src="/images/gui/gui-switch.png" alt="gui-switch"></p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/element.js~GUIElement.html">Overview</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="gui-radio">gui-radio</h5>
+<p>A radio button.</p>
+<p><img src="/images/gui/gui-radio.png" alt="gui-radio"></p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/element.js~GUIElement.html">Overview</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="gui-checkbox">gui-checkbox</h5>
+<p>A checbox.</p>
+<p><img src="/images/gui/gui-checkbox.png" alt="gui-checkbox"></p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/element.js~GUIElement.html">Overview</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="gui-select">gui-select</h5>
+<p>A dropdown input.</p>
+<p><img src="/images/gui/gui-select.png" alt="gui-select"></p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/element.js~GUIElement.html">Overview</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="gui-select-list">gui-select-list</h5>
+<p>A selectable list.</p>
+<p><img src="/images/gui/gui-select-list.png" alt="gui-select-list"></p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/element.js~GUIElement.html">Overview</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="gui-slider">gui-slider</h5>
+<p>A slider for giving a variable input.</p>
+<p><img src="/images/gui/gui-slider.png" alt="gui-slider"></p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/element.js~GUIElement.html">Overview</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="gui-text">gui-text</h5>
+<p>A text entry box.</p>
+<p><img src="/images/gui/gui-text.png" alt="gui-text"></p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/element.js~GUIElement.html">Overview</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="gui-password">gui-password</h5>
+<p>A password entry box.</p>
+<p><img src="/images/gui/gui-password.png" alt="gui-password"></p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/element.js~GUIElement.html">Overview</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="gui-textarea">gui-textarea</h5>
+<p>A big text entry area.</p>
+<p><img src="/images/gui/gui-textarea.png" alt="gui-textarea"></p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/element.js~GUIElement.html">Overview</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="gui-richtext">gui-richtext</h5>
+<p>A big text entry area, with support for HTML.</p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/element.js~GUIElement.html">Overview</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<hr>
+<h4 id="views">Views</h4>
+<h5 id="gui-tree-view">gui-tree-view</h5>
+<p>A view with tree display (nested).</p>
+<p><img src="/images/gui/gui-tree-view.png" alt="gui-tree-view"></p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/dataview.js~UIDataView.html">Overview</a></td>
+    </tr>
+    <tr>
+      <td>Special Events</td>
+      <td><code>activate</code> and <code>select</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="gui-icon-view">gui-icon-view</h5>
+<p>A view with icon display.</p>
+<p><img src="/images/gui/gui-icon-view.png" alt="gui-icon-view"></p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/dataview.js~UIDataView.html">Overview</a></td>
+    </tr>
+    <tr>
+      <td>Special Events</td>
+      <td><code>activate</code> and <code>select</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="gui-list-view">gui-list-view</h5>
+<p>A view with list display.</p>
+<p><img src="/images/gui/gui-list-view.png" alt="gui-list-view"></p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/dataview.js~UIDataView.html">Overview</a></td>
+    </tr>
+    <tr>
+      <td>Special Events</td>
+      <td><code>activate</code> and <code>select</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="gui-file-view">gui-file-view</h5>
+<p>A combination of all views above, with direct connection to the VFS. For file browsing.</p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/dataview.js~UIDataView.html">Overview</a></td>
+    </tr>
+    <tr>
+      <td>Special Events</td>
+      <td><code>activate</code> and <code>select</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<hr>
+<h4 id="misc">Misc</h4>
+<h5 id="gui-progressbar">gui-progressbar</h5>
+<p>A box for showing progress.</p>
+<p><img src="/images/gui/gui-progress.png" alt="gui-progress"></p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/element.js~GUIElement.html">Overview</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="gui-color-swatch">gui-color-swatch</h5>
+<p>A box for selecting colors from a palette.</p>
+<p><img src="/images/gui/gui-color-swatch.png" alt="gui-color-swatch"></p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <tt><a href="https://api.os-js.org/client/class/javascript/gui/element.js~GUIElement.html">Overview</a>
+    </tt></tr>
+  </tbody>
+</table>
+
+<h5 id="gui-menu-bar">gui-menu-bar</h5>
+<p>A bar for showing menus with.</p>
+<p><img src="/images/gui/gui-menu-bar.png" alt="gui-menu-bar"></p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>gui-menu-bar-entry</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/element.js~GUIElement.html">Overview</a></td>
+    </tr>
+    <tr>
+      <td>Special Events</td>
+      <td><code>select</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="gui-menu">gui-menu</h5>
+<p>A menu box.</p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Supported Parents</td>
+      <td>gui-menu-bar-entry</td>
+    </tr>
+    <tr>
+      <td>Allowed Children</td>
+      <td>gui-menu-entry</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/element.js~GUIElement.html">Overview</a></td>
+    </tr>
+    <tr>
+      <td>Special Events</td>
+      <td><code>select</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="gui-statusbar">gui-statusbar</h5>
+<p>A bar for showing statuses.</p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/element.js~GUIElement.html">Overview</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="gui-file-upload">gui-file-upload</h5>
+<p>Creates a button for uploading files.</p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/element.js~GUIElement.html">Overview</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="gui-input-modal">gui-input-modal</h5>
+<p>A textbox with an attached button designed for bringing up dialogs to set values.</p>
+<p><img src="/images/gui/gui-input-modal.png" alt="gui-input-modal"></p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/element.js~GUIElement.html">Overview</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="gui-color-box">gui-color-box</h5>
+<p>A button, but instead of text shows the color assigned.</p>
+<p><img src="/images/gui/gui-color-box.png" alt="gui-color-box"></p>
+<table class="reference">
+  <tbody>
+    <tr>
+      <td>Allowed Children</td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>API Reference</td>
+      <td><a href="https://api.os-js.org/client/class/javascript/gui/element.js~GUIElement.html">Overview</a></td>
+    </tr>
+  </tbody>
+</table>
+
+      </content>
+    </main>
+
+    <footer>
+      <div class="adddshere">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- https://os.js.org (RESPONSIVE) -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-6145716264521226"
+             data-ad-slot="9888011596"
+             data-ad-format="auto"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
+
+      <p>OS.js &copy; Anders Evenrud 2011-2017</p>
+      <p>Generated with Metalsmith</p>
+    </footer>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90971004-7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-90971004-7');
+    </script>
+
+    <script>
+      ((window.gitter = {}).chat = {}).options = {
+        room: 'os-js/OS.js'
+      };
+    </script>
+    <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
+
+    <script>
+document.getElementById('Search').onsubmit = function(ev) {
+  ev.preventDefault();
+
+  var v = document.getElementById('SearchQuery').value;
+  var q = 'site:os.js.org ' + encodeURIComponent(String(v));
+  window.location = 'https://google.com/search?q=' + q;
+
+  return false;
+};
+    </script>
+
+  </body>
+</html>
