@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+<url> <loc>https://manual-legacy.os-js.org/404/</loc> </url>
+<url> <loc>https://manual-legacy.os-js.org/community/</loc> </url>
+<url> <loc>https://manual-legacy.os-js.org/concepts/</loc> </url>
+<url> <loc>https://manual-legacy.os-js.org/configuration/authenticator/_pamshadow/</loc> </url>
+<url> <loc>https://manual-legacy.os-js.org/configuration/authenticator/database/</loc> </url>
+<url> <loc>https://manual-legacy.os-js.org/configuration/authenticator/</loc> </url>
+<url> <loc>https://manual-legacy.os-js.org/configuration/authenticator/pam/</loc> </url>
+<url> <loc>https://manual-legacy.os-js.org/configuration/authenticator/shadow/</loc> </url>
+<url> <loc>https://manual-legacy.os-js.org/configuration/connection/</loc> </url>
+<url> <loc>https://manual-legacy.os-js.org/configuration/</loc> </url>
+<url> <loc>https://manual-legacy.os-js.org/configuration/storage/</loc> </url>
+<url> <loc>https://manual-legacy.os-js.org/configuration/vfs/</loc> </url>
+<url> <loc>https://manual-legacy.os-js.org/development/</loc> </url>
+<url> <loc>https://manual-legacy.os-js.org/faq/</loc> </url>
+<url> <loc>https://manual-legacy.os-js.org/guides/authenticator/</loc> </url>
+<url> <loc>https://manual-legacy.os-js.org/guides/middleware/</loc> </url>
+<url> <loc>https://manual-legacy.os-js.org/guides/misc/</loc> </url>
+<url> <loc>https://manual-legacy.os-js.org/guides/responsive/</loc> </url>
+<url> <loc>https://manual-legacy.os-js.org/guides/service/</loc> </url>
+<url> <loc>https://manual-legacy.os-js.org/guides/storage/</loc> </url>
+<url> <loc>https://manual-legacy.os-js.org/guides/themes/</loc> </url>
+<url> <loc>https://manual-legacy.os-js.org/guides/transport/</loc> </url>
+<url> <loc>https://manual-legacy.os-js.org/</loc> </url>
+<url> <loc>https://manual-legacy.os-js.org/installation/</loc> </url>
+<url> <loc>https://manual-legacy.os-js.org/packages/iframe/</loc> </url>
+<url> <loc>https://manual-legacy.os-js.org/packages/</loc> </url>
+<url> <loc>https://manual-legacy.os-js.org/packages/react/</loc> </url>
+<url> <loc>https://manual-legacy.os-js.org/packages/scheme/</loc> </url>
+<url> <loc>https://manual-legacy.os-js.org/packages/vue/</loc> </url>
+</urlset>

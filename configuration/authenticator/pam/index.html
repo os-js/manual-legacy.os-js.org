@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>PAM Authenticator - OS.js v2 Manual</title>
+    <meta name="description" content="OS.js Manual - OS.js" />
+    <meta name="keywords" content="OS.js,Documentation,Client,Server,API,Tutorial,Tutorials,Manual,Manuals" />
+
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,600" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism-tomorrow.min.css">
+    <link href="/css/manual.css" rel="stylesheet" />
+
+    <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" href="/favicon.png" />
+    <link rel="author" href="https://plus.google.com/101576798387217383063" />
+    <link rel="publisher" href="https://plus.google.com/101576798387217383063" />
+    <link rel="canonical" href="https://manual-legacy.os-js.org/configuration/authenticator/pam" />
+  </head>
+  <body class="configuration_authenticator_pam">
+    <header>
+      <div>OS.js Manual</div>
+    </header>
+
+    <main>
+      <aside id="sidebar">
+        <nav>
+          <ol>
+            <li>
+              <span>Introduction</span>
+              <ul>
+                <li><a href="/">About</a></li>
+                <li><a href="/community">Community</a></li>
+                <li><a href="/installation">Installation</a></li>
+                <li><a href="/faq">FAQ</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Development</span>
+              <ul>
+                <li><a href="/development/#environment">Environment</a></li>
+                <li><a href="/development/#contributing">Contributing</a></li>
+                <li><a href="/development/#style-guide">Style guide</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Concepts</span>
+              <ul>
+                <li><a href="/concepts/#build-system">Build system</a></li>
+                <li><a href="/concepts/#configuration-system">Configuration system</a></li>
+                <li><a href="/concepts/#client">Client</a></li>
+                <li><a href="/concepts/#server">Server</a></li>
+                <li><a href="/concepts/#modules">Modules</a></li>
+                <li><a href="/concepts/#packages">Packages</a></li>
+                <li><a href="/concepts/#overlays">Overlays</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Configuration</span>
+              <ul>
+                <li><a href="/configuration/">General</a></li>
+                <li><a href="/configuration/#webpack">Webpack</a></li>
+                <li><a href="/configuration/connection">Connection</a></li>
+                <li><a href="/configuration/authenticator">Authenticator</a></li>
+                <li><a href="/configuration/storage">Storage</a></li>
+                <li><a href="/configuration/vfs">VFS</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Packages</span>
+              <ul>
+                <li><a href="/packages">Introduction</a></li>
+                <li><a href="/packages/scheme">Using Scheme</a></li>
+                <li><a href="/packages/vue">Using Vue</a></li>
+                <li><a href="/packages/react">Using React</a></li>
+                <li><a href="/packages/iframe">Using IFrame</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Guides</span>
+              <ul>
+                <li><a href="/guides/authenticator">Authenticator</a></li>
+                <li><a href="/guides/storage">Storage</a></li>
+                <li><a href="/guides/transport">VFS Transport</a></li>
+                <li><a href="/guides/middleware">Middleware</a></li>
+                <li><a href="/guides/service">Service</a></li>
+                <li><a href="/guides/themes">Themes</a></li>
+                <li><a href="/guides/responsive">Responsiveness</a></li>
+                <li><a href="/guides/misc">Misc</a></li>
+              </ul>
+            </li>
+
+          </ol>
+
+        </nav>
+      </aside>
+
+      <content>
+        <div style="padding:1em;margin-bottom:2em;background-color:#e6e6e6;font-size:1.5em;font-weight:bold">
+          OS.js v2 has been deprecated.
+          Head over to <a href="https://manual.os-js.org/">https://manual.os-js.org/</a> for the latest v3 manual.
+        </div>
+        <h1 id="pam-authenticator">PAM Authenticator</h1>
+<p>Log in via the system authentication system. <strong>This is only available for Linux and Node</strong>.</p>
+<p><strong>NOTE:</strong> Remember to restart the server to reload configuration changes.</p>
+<p><strong>Also set up the <a href="/configuration/storage/#system">System storage</a> module for this to work as intended.</strong></p>
+<h2 id="dependencies">Dependencies</h2>
+<p>In your OS.js installation directory:</p>
+<pre class="language-bash"><code class="language-bash">$ <span class="token function">npm</span> <span class="token function">install</span> --no-save userid authenticate-pam nan@1.1.0
+</code></pre>
+<p>You&apos;ll need the development library for libpam if you&apos;re on Ubuntu or similar:</p>
+<pre class="language-bash"><code class="language-bash">$ <span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> libpam-1g-dev
+</code></pre>
+<ul>
+<li>On some systems you might have to install <code>authenticate-pam</code> with <code>npm install -g</code> or else you might get a <em>Error in service module</em> upon request.</li>
+<li>Also, on some systems you might have to run OS.js server as a privileged user, or with adjusted SELinux rules.</li>
+</ul>
+<h2 id="setup">Setup</h2>
+<pre class="language-bash"><code class="language-bash"><span class="token comment"># Set up groups</span>
+$ <span class="token function">mkdir</span> /etc/osjs
+$ edit /etc/osjs/groups.json
+
+<span class="token comment"># Set up package blacklist (optional)</span>
+$ edit /etc/osjs/blacklist.json
+
+<span class="token comment"># Change the configured authenticator (or use &quot;shadow&quot; here)</span>
+$ <span class="token function">node</span> osjs config:set --name<span class="token operator">=</span>authenticator --value<span class="token operator">=</span>pam
+
+<span class="token comment"># Make OS.js reload after you log out</span>
+$ <span class="token function">node</span> osjs config:set --name<span class="token operator">=</span>client.ReloadOnShutdown --value<span class="token operator">=</span>true
+
+<span class="token comment"># Update configuration and template files</span>
+$ <span class="token function">node</span> osjs build:config
+</code></pre>
+<p>By default, this module expects you to store the data in <code>/etc/osjs</code>, but you can modify this (see <code>server.modules.*</code> tree for settings).</p>
+<p>To set up a user, use the <code>useradd</code> system command.</p>
+<h3 id="groups-json">groups.json</h3>
+<p>This is an example file for <code>groups.json</code></p>
+<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">&quot;anders&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">&quot;admin&quot;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;guest&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">&quot;api&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;application&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;upload&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;fs&quot;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;marcello&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">&quot;api&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;application&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;curl&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;upload&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;fs&quot;</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="blacklist-json">blacklist.json</h3>
+<p>This is an example file for <code>blacklist.json</code></p>
+<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">&quot;anders&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">&quot;default/ApplicationDraw&quot;</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+      </content>
+    </main>
+
+    <footer>
+      <div class="adddshere">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- https://os.js.org (RESPONSIVE) -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-6145716264521226"
+             data-ad-slot="9888011596"
+             data-ad-format="auto"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
+
+      <p>OS.js &copy; Anders Evenrud 2011-2017</p>
+      <p>Generated with Metalsmith</p>
+    </footer>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90971004-7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-90971004-7');
+    </script>
+
+    <script>
+      ((window.gitter = {}).chat = {}).options = {
+        room: 'os-js/OS.js'
+      };
+    </script>
+    <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
+
+    <script>
+document.getElementById('Search').onsubmit = function(ev) {
+  ev.preventDefault();
+
+  var v = document.getElementById('SearchQuery').value;
+  var q = 'site:os.js.org ' + encodeURIComponent(String(v));
+  window.location = 'https://google.com/search?q=' + q;
+
+  return false;
+};
+    </script>
+
+  </body>
+</html>

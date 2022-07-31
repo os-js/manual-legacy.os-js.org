@@ -1,0 +1,32 @@
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+  overflow: auto;
+  color: #222;
+}
+body > header {
+  font-size: 2em;
+  font-weight: bold;
+  color: #fff;
+  background-color: #572a79;
+  padding: 1em;
+}
+body > main {
+  min-height: 100vh;
+  display: flex;
+}
+body > main > aside {
+  flex: 0 0 auto;
+  margin-right: 2em;
+  padding: 2em;
+  background-color: #fafafa;
+}
+body > main > content {
+  flex: 1 1 auto;
+  min-height: 100%;
+  padding: 2em;
+  padding-bottom: 10em;
+}
+body > footer {
+  text-align: center;
+  font-size: 70%;
+}

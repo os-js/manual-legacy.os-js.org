@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>Database Authenticator - OS.js v2 Manual</title>
+    <meta name="description" content="OS.js Manual - OS.js" />
+    <meta name="keywords" content="OS.js,Documentation,Client,Server,API,Tutorial,Tutorials,Manual,Manuals" />
+
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,600" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism-tomorrow.min.css">
+    <link href="/css/manual.css" rel="stylesheet" />
+
+    <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" href="/favicon.png" />
+    <link rel="author" href="https://plus.google.com/101576798387217383063" />
+    <link rel="publisher" href="https://plus.google.com/101576798387217383063" />
+    <link rel="canonical" href="https://manual-legacy.os-js.org/configuration/authenticator/database" />
+  </head>
+  <body class="configuration_authenticator_database">
+    <header>
+      <div>OS.js Manual</div>
+    </header>
+
+    <main>
+      <aside id="sidebar">
+        <nav>
+          <ol>
+            <li>
+              <span>Introduction</span>
+              <ul>
+                <li><a href="/">About</a></li>
+                <li><a href="/community">Community</a></li>
+                <li><a href="/installation">Installation</a></li>
+                <li><a href="/faq">FAQ</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Development</span>
+              <ul>
+                <li><a href="/development/#environment">Environment</a></li>
+                <li><a href="/development/#contributing">Contributing</a></li>
+                <li><a href="/development/#style-guide">Style guide</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Concepts</span>
+              <ul>
+                <li><a href="/concepts/#build-system">Build system</a></li>
+                <li><a href="/concepts/#configuration-system">Configuration system</a></li>
+                <li><a href="/concepts/#client">Client</a></li>
+                <li><a href="/concepts/#server">Server</a></li>
+                <li><a href="/concepts/#modules">Modules</a></li>
+                <li><a href="/concepts/#packages">Packages</a></li>
+                <li><a href="/concepts/#overlays">Overlays</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Configuration</span>
+              <ul>
+                <li><a href="/configuration/">General</a></li>
+                <li><a href="/configuration/#webpack">Webpack</a></li>
+                <li><a href="/configuration/connection">Connection</a></li>
+                <li><a href="/configuration/authenticator">Authenticator</a></li>
+                <li><a href="/configuration/storage">Storage</a></li>
+                <li><a href="/configuration/vfs">VFS</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Packages</span>
+              <ul>
+                <li><a href="/packages">Introduction</a></li>
+                <li><a href="/packages/scheme">Using Scheme</a></li>
+                <li><a href="/packages/vue">Using Vue</a></li>
+                <li><a href="/packages/react">Using React</a></li>
+                <li><a href="/packages/iframe">Using IFrame</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Guides</span>
+              <ul>
+                <li><a href="/guides/authenticator">Authenticator</a></li>
+                <li><a href="/guides/storage">Storage</a></li>
+                <li><a href="/guides/transport">VFS Transport</a></li>
+                <li><a href="/guides/middleware">Middleware</a></li>
+                <li><a href="/guides/service">Service</a></li>
+                <li><a href="/guides/themes">Themes</a></li>
+                <li><a href="/guides/responsive">Responsiveness</a></li>
+                <li><a href="/guides/misc">Misc</a></li>
+              </ul>
+            </li>
+
+          </ol>
+
+        </nav>
+      </aside>
+
+      <content>
+        <div style="padding:1em;margin-bottom:2em;background-color:#e6e6e6;font-size:1.5em;font-weight:bold">
+          OS.js v2 has been deprecated.
+          Head over to <a href="https://manual.os-js.org/">https://manual.os-js.org/</a> for the latest v3 manual.
+        </div>
+        <h1 id="database-authenticator">Database Authenticator</h1>
+<p>This is just a simple database backend that allows you to store your users (and settings etc.).</p>
+<p><strong>Also set up the <a href="/configuration/storage/#database">Database Storage</a> module for this to work as intended.</strong></p>
+<p><strong>NOTE:</strong> Remember to restart the server to reload configuration changes.</p>
+<p>To create a new user after you&apos;ve set up:</p>
+<pre class="language-bash"><code class="language-bash">$ <span class="token function">node</span> bin/add-user.js <span class="token function">add</span> anders admin
+$ <span class="token function">node</span> bin/add-user.js <span class="token builtin class-name">pwd</span> anders
+$ <span class="token function">mkdir</span> vfs/home/anders
+</code></pre>
+<p>If you&apos;re using the PHP server, you need to install composer dependencies (and skip dependency steps below):</p>
+<pre class="language-bash"><code class="language-bash">$ <span class="token builtin class-name">cd</span> src/server/php
+$ <span class="token function">composer</span> <span class="token function">install</span>
+</code></pre>
+<h2 id="sqlite">Sqlite</h2>
+<h3 id="dependencies">Dependencies</h3>
+<p>In your OS.js installation directory:</p>
+<pre class="language-bash"><code class="language-bash">$ <span class="token function">npm</span> <span class="token function">install</span> --no-save sqlite3 bcrypt
+</code></pre>
+<h3 id="setup">Setup</h3>
+<pre class="language-bash"><code class="language-bash"><span class="token comment"># Configure</span>
+$ <span class="token function">node</span> osjs config:set --name<span class="token operator">=</span>authenticator --value<span class="token operator">=</span>database
+$ <span class="token function">node</span> osjs config:set --name<span class="token operator">=</span>server.modules.auth.database.driver --value<span class="token operator">=</span>sqlite
+
+<span class="token comment"># Rebuild</span>
+$ <span class="token function">node</span> osjs build:config
+</code></pre>
+<h4 id="set-up-database">Set up database</h4>
+<pre class="language-bash"><code class="language-bash">$ <span class="token function">cp</span> src/templates/misc/authstorage.sqlite src/server/
+</code></pre>
+<h2 id="mysql">Mysql</h2>
+<h3 id="dependencies">Dependencies</h3>
+<p>In your OS.js installation directory:</p>
+<pre class="language-bash"><code class="language-bash">$ <span class="token function">npm</span> <span class="token function">install</span> --no-save mysql bcrypt
+</code></pre>
+<h3 id="setup">Setup</h3>
+<pre class="language-bash"><code class="language-bash"><span class="token comment"># Configure</span>
+$ <span class="token function">node</span> osjs config:set --name<span class="token operator">=</span>authenticator --value<span class="token operator">=</span>database
+$ <span class="token function">node</span> osjs config:set --name<span class="token operator">=</span>server.modules.auth.database.driver --value<span class="token operator">=</span>mysql
+$ <span class="token function">node</span> osjs config:set --name<span class="token operator">=</span>server.modules.auth.database.mysql.host --value<span class="token operator">=</span>localhost
+$ <span class="token function">node</span> osjs config:set --name<span class="token operator">=</span>server.modules.auth.database.mysql.user --value<span class="token operator">=</span>osjsuser
+$ <span class="token function">node</span> osjs config:set --name<span class="token operator">=</span>server.modules.auth.database.mysql.password --value<span class="token operator">=</span>osjspassword
+$ <span class="token function">node</span> osjs config:set --name<span class="token operator">=</span>server.modules.auth.database.mysql.database --value<span class="token operator">=</span>osjs
+$ <span class="token function">node</span> osjs config:set --name<span class="token operator">=</span>client.ReloadOnShutdown --value<span class="token operator">=</span>true
+
+<span class="token comment"># Rebuild</span>
+$ <span class="token function">node</span> osjs build:config
+</code></pre>
+<h4 id="set-up-database">Set up database</h4>
+<pre class="language-bash"><code class="language-bash"><span class="token comment"># Set up database</span>
+$ mysql -h localhost -u root -p
+
+mysql<span class="token operator">&gt;</span> CREATE DATABASE osjs<span class="token punctuation">;</span>
+mysql<span class="token operator">&gt;</span> GRANT USAGE ON *.* TO osjsuser@localhost IDENTIFIED BY <span class="token string">&apos;osjspassword&apos;</span><span class="token punctuation">;</span>
+mysql<span class="token operator">&gt;</span> GRANT ALL PRIVILEGES ON osjs.* TO osjsuser@localhost<span class="token punctuation">;</span>
+
+<span class="token comment"># Then set up database tables</span>
+$ mysql -h localhost -u root -p osjs <span class="token operator">&lt;</span> src/templates/misc/authstorage.sql
+</code></pre>
+
+      </content>
+    </main>
+
+    <footer>
+      <div class="adddshere">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- https://os.js.org (RESPONSIVE) -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-6145716264521226"
+             data-ad-slot="9888011596"
+             data-ad-format="auto"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
+
+      <p>OS.js &copy; Anders Evenrud 2011-2017</p>
+      <p>Generated with Metalsmith</p>
+    </footer>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90971004-7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-90971004-7');
+    </script>
+
+    <script>
+      ((window.gitter = {}).chat = {}).options = {
+        room: 'os-js/OS.js'
+      };
+    </script>
+    <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
+
+    <script>
+document.getElementById('Search').onsubmit = function(ev) {
+  ev.preventDefault();
+
+  var v = document.getElementById('SearchQuery').value;
+  var q = 'site:os.js.org ' + encodeURIComponent(String(v));
+  window.location = 'https://google.com/search?q=' + q;
+
+  return false;
+};
+    </script>
+
+  </body>
+</html>

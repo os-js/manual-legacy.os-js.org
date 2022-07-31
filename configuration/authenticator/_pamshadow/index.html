@@ -1,0 +1,33 @@
+<h2 id="setup">Setup</h2>
+<pre class="language-bash"><code class="language-bash"><span class="token comment"># Set up groups</span>
+$ <span class="token function">mkdir</span> /etc/osjs
+$ edit /etc/osjs/groups.json
+
+<span class="token comment"># Set up package blacklist (optional)</span>
+$ edit /etc/osjs/blacklist.json
+
+<span class="token comment"># Change the configured authenticator (or use &quot;shadow&quot; here)</span>
+$ <span class="token function">node</span> osjs config:set --name<span class="token operator">=</span>authenticator --value<span class="token operator">=</span>pam
+
+<span class="token comment"># Make OS.js reload after you log out</span>
+$ <span class="token function">node</span> osjs config:set --name<span class="token operator">=</span>client.ReloadOnShutdown --value<span class="token operator">=</span>true
+
+<span class="token comment"># Update configuration and template files</span>
+$ <span class="token function">node</span> osjs build:config
+</code></pre>
+<p>By default, this module expects you to store the data in <code>/etc/osjs</code>, but you can modify this (see <code>server.modules.*</code> tree for settings).</p>
+<p>To set up a user, use the <code>useradd</code> system command.</p>
+<h3 id="groups-json">groups.json</h3>
+<p>This is an example file for <code>groups.json</code></p>
+<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">&quot;anders&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">&quot;admin&quot;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;guest&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">&quot;api&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;application&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;upload&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;fs&quot;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;marcello&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">&quot;api&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;application&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;curl&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;upload&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;fs&quot;</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="blacklist-json">blacklist.json</h3>
+<p>This is an example file for <code>blacklist.json</code></p>
+<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">&quot;anders&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">&quot;default/ApplicationDraw&quot;</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre>

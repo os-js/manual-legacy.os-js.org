@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>Misc Modules Guide - OS.js v2 Manual</title>
+    <meta name="description" content="OS.js Manual - OS.js" />
+    <meta name="keywords" content="OS.js,Documentation,Client,Server,API,Tutorial,Tutorials,Manual,Manuals" />
+
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,600" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism-tomorrow.min.css">
+    <link href="/css/manual.css" rel="stylesheet" />
+
+    <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" href="/favicon.png" />
+    <link rel="author" href="https://plus.google.com/101576798387217383063" />
+    <link rel="publisher" href="https://plus.google.com/101576798387217383063" />
+    <link rel="canonical" href="https://manual-legacy.os-js.org/guides/misc" />
+  </head>
+  <body class="guides_misc">
+    <header>
+      <div>OS.js Manual</div>
+    </header>
+
+    <main>
+      <aside id="sidebar">
+        <nav>
+          <ol>
+            <li>
+              <span>Introduction</span>
+              <ul>
+                <li><a href="/">About</a></li>
+                <li><a href="/community">Community</a></li>
+                <li><a href="/installation">Installation</a></li>
+                <li><a href="/faq">FAQ</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Development</span>
+              <ul>
+                <li><a href="/development/#environment">Environment</a></li>
+                <li><a href="/development/#contributing">Contributing</a></li>
+                <li><a href="/development/#style-guide">Style guide</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Concepts</span>
+              <ul>
+                <li><a href="/concepts/#build-system">Build system</a></li>
+                <li><a href="/concepts/#configuration-system">Configuration system</a></li>
+                <li><a href="/concepts/#client">Client</a></li>
+                <li><a href="/concepts/#server">Server</a></li>
+                <li><a href="/concepts/#modules">Modules</a></li>
+                <li><a href="/concepts/#packages">Packages</a></li>
+                <li><a href="/concepts/#overlays">Overlays</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Configuration</span>
+              <ul>
+                <li><a href="/configuration/">General</a></li>
+                <li><a href="/configuration/#webpack">Webpack</a></li>
+                <li><a href="/configuration/connection">Connection</a></li>
+                <li><a href="/configuration/authenticator">Authenticator</a></li>
+                <li><a href="/configuration/storage">Storage</a></li>
+                <li><a href="/configuration/vfs">VFS</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Packages</span>
+              <ul>
+                <li><a href="/packages">Introduction</a></li>
+                <li><a href="/packages/scheme">Using Scheme</a></li>
+                <li><a href="/packages/vue">Using Vue</a></li>
+                <li><a href="/packages/react">Using React</a></li>
+                <li><a href="/packages/iframe">Using IFrame</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Guides</span>
+              <ul>
+                <li><a href="/guides/authenticator">Authenticator</a></li>
+                <li><a href="/guides/storage">Storage</a></li>
+                <li><a href="/guides/transport">VFS Transport</a></li>
+                <li><a href="/guides/middleware">Middleware</a></li>
+                <li><a href="/guides/service">Service</a></li>
+                <li><a href="/guides/themes">Themes</a></li>
+                <li><a href="/guides/responsive">Responsiveness</a></li>
+                <li><a href="/guides/misc">Misc</a></li>
+              </ul>
+            </li>
+
+          </ol>
+
+        </nav>
+      </aside>
+
+      <content>
+        <div style="padding:1em;margin-bottom:2em;background-color:#e6e6e6;font-size:1.5em;font-weight:bold">
+          OS.js v2 has been deprecated.
+          Head over to <a href="https://manual.os-js.org/">https://manual.os-js.org/</a> for the latest v3 manual.
+        </div>
+        <h1 id="misc-modules-guide">Misc Modules Guide</h1>
+<p>This page documents other modules in OS.js.</p>
+<h2 id="dialogs">Dialogs</h2>
+<p>Just extend the <code>core/dialog</code> class and put it into <code>window.OSjs.Dialogs</code>. You can do this in your package or using a preload (see <a href="/configuration/#adding-preloads">configuration</a>.</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">class</span> <span class="token class-name">SomeCoolDialog</span> <span class="token keyword">extends</span> <span class="token class-name">Dialog</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+OSjs<span class="token punctuation">.</span>Dialogs<span class="token punctuation">.</span>DialogName <span class="token operator">=</span> SomeCoolDialog<span class="token punctuation">;</span>
+</code></pre>
+<p>To create a new dialog:</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">import</span> Dialog <span class="token keyword">from</span> <span class="token string">&apos;core/dialog&apos;</span><span class="token punctuation">;</span>
+
+Dialog<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token string">&apos;DialogName&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token literal-property property">foo</span><span class="token operator">:</span> <span class="token string">&apos;bar&apos;</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">ev<span class="token punctuation">,</span> btn<span class="token punctuation">,</span> result</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token comment">// ev = Browser event</span>
+  <span class="token comment">// btn = Button used to close dialog</span>
+  <span class="token comment">// result =  Any result the dialog generated</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h2 id="menu">Menu</h2>
+<p>To create a menu:</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">import</span> <span class="token operator">*</span> <span class="token keyword">as</span> Menu <span class="token keyword">from</span> <span class="token string">&apos;gui/menu&apos;</span><span class="token punctuation">;</span>
+
+Menu<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">{</span>
+  <span class="token literal-property property">title</span><span class="token operator">:</span> <span class="token string">&apos;Some title&apos;</span><span class="token punctuation">,</span>
+  <span class="token function-variable function">onClick</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;clicked&apos;</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">title</span><span class="token operator">:</span> <span class="token string">&apos;Submenu&apos;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">menu</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+    <span class="token literal-property property">title</span><span class="token operator">:</span> <span class="token string">&apos;Submenu item&apos;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span> ev<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Or {x, y}</span>
+</code></pre>
+<h2 id="process">Process</h2>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">import</span> Process <span class="token keyword">from</span> <span class="token string">&apos;core/process&apos;</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Launch with name</span>
+Process<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token string">&apos;PackageClassName&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token literal-property property">foo</span><span class="token operator">:</span> <span class="token string">&apos;bar&apos;</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Promise</span>
+
+<span class="token comment">// Launch with array</span>
+Process<span class="token punctuation">.</span><span class="token function">createFromArray</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">&apos;PackageClassName&apos;</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Promise</span>
+
+<span class="token comment">// Launch from file (guesses what application will be used)</span>
+Process<span class="token punctuation">.</span><span class="token function">createFromFile</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">FileMetadata</span><span class="token punctuation">(</span><span class="token string">&apos;home:///my-file.txt&apos;</span><span class="token punctuation">,</span> <span class="token string">&apos;text/plain&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Broadcast a message</span>
+Process<span class="token punctuation">.</span><span class="token function">message</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token literal-property property">bar</span><span class="token operator">:</span> <span class="token string">&apos;baz&apos;</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+Process<span class="token punctuation">.</span><span class="token function">message</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token literal-property property">bar</span><span class="token operator">:</span> <span class="token string">&apos;baz&apos;</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token literal-property property">source</span><span class="token operator">:</span> app<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// To prevent signaling a certain process</span>
+</code></pre>
+<pre class="language-javascript"><code class="language-javascript"><span class="token comment">// Get a launch argument from `.create()`</span>
+proc<span class="token punctuation">.</span><span class="token function">_getArgument</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span><span class="token punctuation">)</span> <span class="token comment">// =&gt; &apos;bar&apos;</span>
+
+<span class="token comment">// Listen to a given broadcast message</span>
+proc<span class="token punctuation">.</span><span class="token function">_on</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">obj</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// =&gt; obj = {bar: &apos;baz&apos;}</span>
+
+<span class="token comment">// Get an URL to a resource in package</span>
+proc<span class="token punctuation">.</span><span class="token function">_getResource</span><span class="token punctuation">(</span><span class="token string">&apos;something.txt&apos;</span><span class="token punctuation">)</span> <span class="token comment">// =&gt; /packages/repo/PackageName/something.txt</span>
+</code></pre>
+<h2 id="applications">Applications</h2>
+<p>To subscribe to events (and also broadcast messages):</p>
+<pre class="language-javascript"><code class="language-javascript">application<span class="token punctuation">.</span><span class="token function">_on</span><span class="token punctuation">(</span><span class="token string">&apos;event&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token operator">...</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+application<span class="token punctuation">.</span><span class="token function">_off</span><span class="token punctuation">(</span><span class="token string">&apos;event&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+application<span class="token punctuation">.</span><span class="token function">_emit</span><span class="token punctuation">(</span><span class="token string">&apos;event&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>arg<span class="token punctuation">,</span> <span class="token operator">...</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="events">Events</h3>
+<pre class="language-bash"><code class="language-bash">message       All events                               <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span>msg, object, options<span class="token punctuation">)</span>
+attention     When application gets attention signal   <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span>args<span class="token punctuation">)</span>
+hashchange    When URL <span class="token builtin class-name">hash</span> has changed                <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span>args<span class="token punctuation">)</span>
+api           API event                                <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span>method<span class="token punctuation">)</span>
+destroy       Destruction event                        <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span>killed<span class="token punctuation">)</span>
+destroyWindow Attached window destruction event        <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span>win<span class="token punctuation">)</span>
+vfs           For all VFS events                       <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span>msg, object, options<span class="token punctuation">)</span>
+vfs:mount     VFS <span class="token function">mount</span> event                          <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span>module, options, msg<span class="token punctuation">)</span>
+vfs:unmount   VFS unmount event                        <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span>module, options, msg<span class="token punctuation">)</span>
+vfs:write     VFS <span class="token function">write</span> event                          <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span>dest, options, msg<span class="token punctuation">)</span>
+vfs:mkdir     VFS <span class="token function">mkdir</span> event                          <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span>dest, options, msg<span class="token punctuation">)</span>
+vfs:move      VFS move event                           <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span><span class="token punctuation">{</span>src,dest<span class="token punctuation">}</span>, options, msg<span class="token punctuation">)</span>
+vfs:delete    VFS delete event                         <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span>dest, options, msg<span class="token punctuation">)</span>
+vfs:upload    VFS upload event                         <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span>file, options, msg<span class="token punctuation">)</span>
+vfs:update    VFS update event                         <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span>dir, options, msg<span class="token punctuation">)</span>
+</code></pre>
+<h2 id="windows">Windows</h2>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">import</span> Window <span class="token keyword">from</span> <span class="token string">&apos;core/window&apos;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> WindowManager <span class="token keyword">from</span> <span class="token string">&apos;core/windowmanager&apos;</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Create a window</span>
+<span class="token keyword">const</span> win <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Window</span><span class="token punctuation">(</span><span class="token string">&apos;WindowName&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// And add it via one of three ways:</span>
+application<span class="token punctuation">.</span><span class="token function">_addWindow</span><span class="token punctuation">(</span>win<span class="token punctuation">)</span><span class="token punctuation">;</span>
+window<span class="token punctuation">.</span><span class="token function">_addChild</span><span class="token punctuation">(</span>win<span class="token punctuation">)</span><span class="token punctuation">;</span>
+WindowManager<span class="token punctuation">.</span>instance<span class="token punctuation">.</span><span class="token function">addWindow</span><span class="token punctuation">(</span>win<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// To get a window from your application</span>
+application<span class="token punctuation">.</span><span class="token function">_getWindowByName</span><span class="token punctuation">(</span><span class="token string">&apos;WindowName&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+application<span class="token punctuation">.</span><span class="token function">_getMainWindow</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+application<span class="token punctuation">.</span><span class="token function">_getWindowByTag</span><span class="token punctuation">(</span><span class="token string">&apos;optional&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+application<span class="token punctuation">.</span><span class="token function">_getWindows</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+application<span class="token punctuation">.</span><span class="token function">_getWindow</span><span class="token punctuation">(</span><span class="token string">&apos;value&apos;</span><span class="token punctuation">,</span> <span class="token string">&apos;key&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Common methods</span>
+win<span class="token punctuation">.</span><span class="token function">_close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Closes the window</span>
+win<span class="token punctuation">.</span><span class="token function">_minimize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Minimize window state</span>
+win<span class="token punctuation">.</span><span class="token function">_maximize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Maximize window state</span>
+win<span class="token punctuation">.</span><span class="token function">_restore</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Restore window state</span>
+win<span class="token punctuation">.</span><span class="token function">_focus</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Focuses the window</span>
+win<span class="token punctuation">.</span><span class="token function">_blur</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Unfocuses the window</span>
+win<span class="token punctuation">.</span><span class="token function">_move</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Move to given position</span>
+win<span class="token punctuation">.</span><span class="token function">_resize</span><span class="token punctuation">(</span>w<span class="token punctuation">,</span> h<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Resize to given size</span>
+win<span class="token punctuation">.</span><span class="token function">_find</span><span class="token punctuation">(</span><span class="token string">&apos;id&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Finds GUI Element with given &quot;data-id=&quot;</span>
+win<span class="token punctuation">.</span><span class="token function">_findByQuery</span><span class="token punctuation">(</span><span class="token string">&apos;query&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Finds GUI Element by query</span>
+win<span class="token punctuation">.</span><span class="token function">_findByQuery</span><span class="token punctuation">(</span><span class="token string">&apos;query&apos;</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Finds all GUI Elements matching this query</span>
+win<span class="token punctuation">.</span><span class="token function">_findDOM</span><span class="token punctuation">(</span><span class="token string">&apos;id&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Same as `find()` except it returns a Node instance instead of GUI.Element</span>
+win<span class="token punctuation">.</span><span class="token function">_create</span><span class="token punctuation">(</span><span class="token string">&apos;element&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> parentNode<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Create a new GUI element with given parameters and parent</span>
+win<span class="token punctuation">.</span><span class="token function">_getRoot</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Gets the window content container Node</span>
+win<span class="token punctuation">.</span><span class="token function">_toggleLoading</span><span class="token punctuation">(</span>boolean<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Toggle loading overlay</span>
+win<span class="token punctuation">.</span><span class="token function">_toggleDisabled</span><span class="token punctuation">(</span>boolean<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Toggle disabled overlay</span>
+</code></pre>
+<p>To subscribe to events:</p>
+<pre class="language-javascript"><code class="language-javascript">win<span class="token punctuation">.</span><span class="token function">_on</span><span class="token punctuation">(</span><span class="token string">&apos;event&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token operator">...</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+win<span class="token punctuation">.</span><span class="token function">_off</span><span class="token punctuation">(</span><span class="token string">&apos;event&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+win<span class="token punctuation">.</span><span class="token function">_emit</span><span class="token punctuation">(</span><span class="token string">&apos;event&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>arg<span class="token punctuation">,</span> <span class="token operator">...</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="events">Events</h3>
+<pre class="language-bash"><code class="language-bash">inited        When has been inited and rendered         <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
+focus         When window gets focus                    <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
+blur          When window loses focus                   <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
+destroy       When window is closed                     <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
+maximize      When window is maxmimized                 <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
+minimize      When window is minimized                  <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
+restore       When window is restored                   <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
+resize        When window is resized                    <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span>w, h<span class="token punctuation">)</span>
+resized       Triggers after window is resized          <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span>w, h<span class="token punctuation">)</span>
+move          When window is moved                      <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span>x, y<span class="token punctuation">)</span>
+moved         Triggers after window is moved            <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span>x, y<span class="token punctuation">)</span>
+keydown       When keydown                              <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span>ev, keyCode, shiftKey, ctrlKey, altKey<span class="token punctuation">)</span>
+keyup         When keyup                                <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span>ev, keyCode, shiftKey, ctrlKey, altKey<span class="token punctuation">)</span>
+keypress      When keypress                             <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span>ev, keyCode, shiftKey, ctrlKey, altKey<span class="token punctuation">)</span>
+drop          When a drop event occurs                  <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span>ev, type, item, args<span class="token punctuation">)</span>
+drop:upload   When a upload <span class="token function">file</span> was dropped            <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span>ev, <span class="token operator">&lt;</span>File<span class="token operator">&gt;</span>, args<span class="token punctuation">)</span>
+drop:file     When a internal <span class="token function">file</span> object was dropped   <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span>ev, VFS.File, args<span class="token punctuation">)</span>
+</code></pre>
+<h2 id="error-handler">Error Handler</h2>
+<pre class="language-javascript"><code class="language-javascript">OSjs<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">&apos;title&apos;</span><span class="token punctuation">,</span> <span class="token string">&apos;description&apos;</span><span class="token punctuation">,</span> <span class="token string">&apos;message&apos;</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token string">&apos;exception here if available&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h2 id="gui-element">GUI Element</h2>
+<pre class="language-javascript"><code class="language-javascript">
+<span class="token comment">// DOM Manipulation and events</span>
+guiElement<span class="token punctuation">.</span><span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+guiElement<span class="token punctuation">.</span><span class="token function">hide</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+guiElement<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+guiElement<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+guiElement<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+guiElement<span class="token punctuation">.</span><span class="token function">appendHTML</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+guiElement<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+guiElement<span class="token punctuation">.</span><span class="token function">querySelectorAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+guiElement<span class="token punctuation">.</span><span class="token function">css</span><span class="token punctuation">(</span><span class="token string">&apos;key&apos;</span> <span class="token comment">/*[, &apos;value&apos;*/</span><span class="token punctuation">)</span>
+guiElement<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">&apos;name&apos;</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span> <span class="token comment">/*, useCapture*/</span><span class="token punctuation">)</span>
+
+<span class="token comment">// Attributes and values</span>
+guiElement<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">&apos;key&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+guiElement<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">&apos;key&apos;</span><span class="token punctuation">,</span> <span class="token string">&apos;value&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Inputs and views</span>
+guiElement<span class="token punctuation">.</span><span class="token function">focus</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+guiElement<span class="token punctuation">.</span><span class="token function">blur</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment">// Data (like dropdowns and views)</span>
+guiElement<span class="token punctuation">.</span><span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+guiElement<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">&apos;entry&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+guiElement<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">&apos;entry&apos;</span><span class="token punctuation">,</span> <span class="token string">&apos;entry&apos;</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+guiElement<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span><span class="token string">&apos;id&apos;</span> <span class="token comment">/*, &apos;key&apos;*/</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+guiElement<span class="token punctuation">.</span><span class="token function">patch</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">&apos;entry&apos;</span><span class="token punctuation">,</span> <span class="token string">&apos;entry&apos;</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token comment">// Create a GUI element programatically</span>
+<span class="token keyword">const</span> guiElement <span class="token operator">=</span> GUIElement<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token string">&apos;gui-element-name&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">parameter</span><span class="token operator">:</span> <span class="token string">&apos;value&apos;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+parentElement<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>guiElement<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// ... from DOM element</span>
+<span class="token keyword">const</span> guiElement <span class="token operator">=</span> GUIElement<span class="token punctuation">.</span><span class="token function">createFromNode</span><span class="token punctuation">(</span>el<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// .. with HTML</span>
+parentElement<span class="token punctuation">.</span><span class="token function">appendHTML</span><span class="token punctuation">(</span><span class="token string">&apos;&lt;gui-element-name&gt;&lt;/gui-element-name&gt;&apos;</span><span class="token punctuation">,</span> optionalWinReference<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+
+      </content>
+    </main>
+
+    <footer>
+      <div class="adddshere">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- https://os.js.org (RESPONSIVE) -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-6145716264521226"
+             data-ad-slot="9888011596"
+             data-ad-format="auto"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
+
+      <p>OS.js &copy; Anders Evenrud 2011-2017</p>
+      <p>Generated with Metalsmith</p>
+    </footer>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90971004-7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-90971004-7');
+    </script>
+
+    <script>
+      ((window.gitter = {}).chat = {}).options = {
+        room: 'os-js/OS.js'
+      };
+    </script>
+    <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
+
+    <script>
+document.getElementById('Search').onsubmit = function(ev) {
+  ev.preventDefault();
+
+  var v = document.getElementById('SearchQuery').value;
+  var q = 'site:os.js.org ' + encodeURIComponent(String(v));
+  window.location = 'https://google.com/search?q=' + q;
+
+  return false;
+};
+    </script>
+
+  </body>
+</html>
